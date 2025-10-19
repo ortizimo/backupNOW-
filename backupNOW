@@ -1,0 +1,78 @@
+#!/bin/bash
+# author: ortizimo
+# date: 2025.10.18
+# version: 1.0
+
+clear
+echo ""
+echo "************************"
+echo -e "\033[1;33m 	backupNOW! \033[0m"
+echo "************************"
+echo ""
+
+while true; do
+	read -p "Did you backup to an external HDD (n) or do you want to continue (y) " ny
+	case $ny in
+		[Nn]* ) 
+			echo -e "\033[1;33mExiting now!\033[0m"
+			exit 1; break;;
+		[Yy]* )
+			echo ""
+			echo -e "\033[1;33mDeleting previous backup version...\033[0m"
+			echo "-----------------------------------"
+			sleep 2
+			sudo rm -rf backup/; break;;
+	esac
+done
+echo -e "\033[1;33mDeletion completed!\033[0m"
+sleep 2
+
+clear
+
+echo -e "\033[1;33mCopying retrodeck to new backup dir now...\033[0m"
+echo "------------------------------------------"
+sleep 2
+sudo cp -Rv retrodeck/ backup/ --force
+echo -e "\033[1;33mAll retrodeck files copied!\033[0m"
+sleep 2
+
+clear
+
+echo -e "\033[1;33mCopying the shutdown BASH script now...\033[0m"
+echo "---------------------------------------"
+sleep 2
+sudo cp /usr/local/bin/shutdown.sh backup/
+echo -e "\033[1;33mCopying complete!\033[0m"
+sleep 2
+
+clear
+
+echo -e "\033[1;33mCopying shutdown.service file now...\033[0m"
+echo "------------------------------------"
+sleep 2
+sudo cp ~/.config/systemd/user/shutdown.service backup/
+echo -e "\033[1;33mCopying complete!\033[0m"
+sleep 2
+
+clear
+
+echo -e "\033[1;33mCopying myself to backup dir now...\033[0m"
+echo "-----------------------------------"
+sleep 2
+sudo cp /usr/local/bin/backupNOW backup/
+echo -e "\033[1;33mCopying complete!\033[0m\n" 
+sleep 2
+
+clear
+echo -e "\033[1;33mMaking sure all files permissions are set for the current user\033[0m"
+echo "--------------------------------------------------------------"
+sleep 2
+sudo chown -R retrodeck:retrodeck backup/
+echo -e "\033[1;33mAll files done!\033[0m"
+ls -l backup/
+echo -e "\033[1;33mTotal space used: \033[0m $(du -sh backup/)"
+sleep 3
+echo ""
+echo -e "\033[1;33mEVERYTHING IS NOW COPIED! Don't forget to backup to an external drive!\033[0m" 
+echo -e "\nNotes: \n1. Controller and scanlines configuration are NOT backed up!\n 2. All scripts go in /usr/local/bin dir"
+sleep 2
