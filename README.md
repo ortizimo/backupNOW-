@@ -1,4 +1,4 @@
-BASH script to copy entire retrodeck directory and all working scripts. Version 1.2.
+BASH script to copy entire retrodeck directory and all working scripts. Version 1.3!
 
 1. Make sure you edit the current user and system in the script. It is set to bazzite:bazzite.
 2. Once that is changed, give it X rights: sudo chmod +x backupNOW.
